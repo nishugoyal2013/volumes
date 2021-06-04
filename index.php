@@ -1,35 +1,69 @@
-
 <!DOCTYPE html>
 <html>
 <head>
 	<meta charset="utf-8">
 	<title>File Handling</title>
+	<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<!-- Latest compiled JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 </head>
 <body>
-		<form method="post" action="">	
-		<!-- <input type="submit" name="submit" value="Read File"/><br/><br/> -->
-		<textarea readonly style="width: 50%; height: 200px;">
-			<?php 
-				
-				$myfile = fopen("webdictionary.txt", "r+") or die("Unable to open file!");	
-				echo fread($myfile, filesize("webdictionary.txt"));		
+	<div class="jumbotron text-center">
+	  <h1>My File Handling Project</h1>
+	  <p>Resize this responsive page to see the effect!</p> 
+	</div>
 
-			?>				
-		</textarea><br/><br/>
-		<?php
-		if(isset($_POST['submit1']))
-			{				
-				$text = $_POST['write'];					
-				fwrite($myfile,$text);
-				fclose($myfile); 	
-			}
+<form method="post" action="">
+	<div class="container">
+		<div class="row text-center">
+			<div class="col-sm-6">
+				<textarea readonly class="" style="width: 90%; height: 300px;">
+					<?php 
+						if(isset($_POST['submit']))
+						{
+							
+							$myfile = fopen("./tmp/webdictionary.txt", "r") or die("Unable to open file!");	
+							echo fread($myfile, filesize("./tmp/webdictionary.txt"));
+							fclose($myfile);
+						}		
 
+					?>
+				</textarea>				
+			</div>
 
-		?>
-		
-			<input type="text" name="write" value=""/><br/><br/>		
-			<input type="submit" name="submit1" value="Save" onclick="reload" />
-		</form>
+			<div class="col-sm-6">
+				<textarea type="text" name="write" value="" style="width: 90%; height: 300px; text-align: left;">
+					<?php
+						if(isset($_POST['submit1']))
+							{				
+								$text = $_POST['write'];
+								// echo $text;die();
+							
+								$fp = fopen("./tmp/webdictionary.txt", "a+") or die("Unable to open file!");					
+								fwrite($fp,"\n".$text);
+								fclose($fp);								 
+							}
+					?>
+				</textarea>				
+			</div>
+		</div>
+
+			<div class="row text-center">
+				<div class="col-sm-6">
+					<input class="btn btn-primary" type="submit" name="submit" value="Read File"/>
+				</div>
+				<div class="col-sm-6">
+					<input class="btn btn-primary" type="submit" name="submit1" value="Write File"/>
+				</div>			
+			</div>
+
+	</div>
+</form>
 
 </body>
 </html>
